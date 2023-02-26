@@ -3,6 +3,7 @@ import Header from "./Header"
 import styles from '@/styles/Home.module.scss'
 import { HomeProps } from "@/pages"
 import { FC } from "react"
+import BookReview from "@/components/BookReview"
 
 const HomeView: FC<HomeProps>= ({
   bookReviews
@@ -11,12 +12,13 @@ const HomeView: FC<HomeProps>= ({
     <View
       footer={<footer className={styles.footer}>hola, soy el footer</footer>}
       header={<Header />}>
-        
-        {bookReviews.map((bookReview, index) => 
-          <div key={`${bookReview.bookTitle}-${index}`}>
-            <h1>{bookReview.bookTitle}</h1>
-            <span>{bookReview.status}</span>
-          </div>)}
+        <div className={styles.container}>
+          {bookReviews.map((bookReview, index) => 
+            <BookReview 
+              key={`${bookReview.bookTitle}-${index}`}
+              bookReview={bookReview} />
+          )}
+        </div>
     </View>
   )
 }

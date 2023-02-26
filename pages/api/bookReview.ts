@@ -18,8 +18,6 @@ export default async function handler(
         })
         .lean()
   
-        console.log(bookReviews)
-  
         res.status(200).json({ bookReviews })
       } catch (error) {
         throw error

@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  background-color: bisque;
+  gap: 2rem;
+  align-items: center;
+  border: 1px solid gray;
+  padding: 2rem;
+
+  h1 {
+    font-size: 2.5rem;
+  }
+}

@@ -18,8 +18,6 @@ export const getServerSideProps = async () => {
   const response = await axios.get(`${endpoints.nextServer!}/api/bookReview`)
   const { bookReviews } = response.data
 
-  console.log(bookReviews)
-
   return {
     props: {
       bookReviews
