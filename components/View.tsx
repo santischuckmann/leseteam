@@ -18,7 +18,7 @@ const View = forwardRef<HTMLDivElement, View>(({
   return (
     <>
       <DefaultHead title={headTitle} />
-      <div ref={ref}className={styles.root}>
+      <div ref={ref} className={styles.root}>
         {header}
         {children}
         {footer}

@@ -15,8 +15,8 @@ export default function Home (props: HomeProps) {
 }
 
 export const getServerSideProps = async () => {
-  const response = await axios.get(`${endpoints.nextServer!}/api/bookReview`)
-  const { bookReviews } = response.data
+  const response = await axios.get(`${endpoints.nextServer!}/api/bookReview/getMany`)
+  const { bookReviews } = response.data ?? []
 
   return {
     props: {
