@@ -5,8 +5,9 @@ import { HomeProps } from "@/pages"
 import React, { FC, MouseEventHandler, useState } from "react"
 import BookReview from "@/components/BookReview"
 import AddElement from "@/components/AddElement"
-import { BookReviewStatus } from "@/constants"
+import { BookReviewStatus, RequestMethods } from "@/constants"
 import { Button, Dialog, TextField } from "@mui/material"
+import { onChangeInput, operate } from "@/utils"
 
 const defaultBookReview = {
   bookTitle : '',
@@ -30,6 +31,8 @@ const HomeView: FC<HomeProps>= ({
   const [ newBookReview, setNewBookReview ] = useState<typeof defaultBookReview>(defaultBookReview)
   const [ bookReviewsToRender, setBookReviewsToRender ] = useState(bookReviews)
 
+  console.log({newBookReview})
+
   const _handleAddBookReview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation()
 
@@ -39,18 +42,21 @@ const HomeView: FC<HomeProps>= ({
   const _handleChangeNewBookReview = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target: { name, value } } = event ?? {}
 
-    setNewBookReview((prev) => ({
-      ...prev,
-      [name]: value
-    }))
+    onChangeInput({ update: setNewBookReview, name, value })
   }
 
-  const _handleSaveNewBookReview = () => {
+  const _handleSaveNewBookReview = async () => {
     setBookReviewsToRender(prev => [ ...prev, newBookReview ])
 
     setNewBookReview(defaultBookReview)
 
     setAnchorEl(null)
+
+    await operate({ 
+      method: RequestMethods.Post, 
+      url: '/bookReview', 
+      data: newBookReview
+    })
   }
 
   return (

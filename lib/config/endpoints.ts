@@ -1,3 +1,3 @@
 export const endpoints = {
-  nextServer: process.env.NEXT_APP_SERVER
+  nextServer: process.env.NEXT_APP_SERVER!
 }
