@@ -5,16 +5,11 @@ import { HomeProps } from "@/pages"
 import React, { FC, MouseEventHandler, useState } from "react"
 import BookReview from "@/components/BookReview"
 import AddElement from "@/components/AddElement"
-import { BookReviewStatus, RequestMethods } from "@/constants"
+import { BookReviewStatus, defaultBookReview, RequestMethods } from "@/constants"
 import { Button, Dialog, TextField } from "@mui/material"
 import { onChangeInput, operate } from "@/utils"
 
-const defaultBookReview = {
-  bookTitle : '',
-  status: BookReviewStatus.Pending
-}
-
-const textFields = [
+export const textFields = [
   {
     name: 'bookTitle',
     value: function (state: typeof defaultBookReview) {

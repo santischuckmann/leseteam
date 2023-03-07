@@ -22,3 +22,8 @@ export const RequestMethodsAxios = {
   Delete: 'delete',
   Put: 'put',
 };
+
+export const defaultBookReview = {
+  bookTitle : '',
+  status: BookReviewStatus.Pending
+}

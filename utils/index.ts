@@ -26,14 +26,20 @@ export const operate = async ({ method = RequestMethods.Get, url, data, onError 
 }) => {
   try {
     switch (method) {
-      case 'GET': {
+      case RequestMethods.Get: {
         const response = await api.get(`api${url}`)  
 
         return response.data
       }
-  
-      case 'POST' : {
-        await api.post(`api${url}`, data)
+      case RequestMethods.Post : {
+        const response = await api.post(`api${url}`, data)
+
+        return response.data
+      }
+      case RequestMethods.Put : {
+        const response = await api.post(`api${url}`, data)
+
+        return response.data
       }
     }
   } catch (error) {
