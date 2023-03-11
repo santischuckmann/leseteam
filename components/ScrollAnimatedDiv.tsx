@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, useAnimation, Variants, AnimationControls } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
@@ -13,6 +13,7 @@ interface ScrollAnimatedDivProps {
   initial: string;
   inViewCallback: (control: AnimationControls) => void;
   containerClassName: string;
+  renderOnce?: boolean;
 }
 
 export const ScrollAnimatedDiv = ({
@@ -20,14 +21,19 @@ export const ScrollAnimatedDiv = ({
   initial = animationVariants.Hidden,
   inViewCallback,
   children,
-  containerClassName
+  containerClassName,
+  renderOnce = true
 }: ScrollAnimatedDivProps) => {
   const animationControl = useAnimation()
+
+  const [oncePerMount, setOncePerMount] = useState(false)
 
   const [ref, inView] = useInView()
 
   useEffect(() => {
-    if (inView) {
+    if (inView && !oncePerMount) {
+      setOncePerMount(renderOnce)
+
       inViewCallback(animationControl)
     }
   }, [animationControl, inView])

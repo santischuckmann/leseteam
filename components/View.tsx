@@ -9,7 +9,7 @@ interface View {
   headTitle?: string;
 }
 
-const View = forwardRef<HTMLDivElement, View>(({
+export const View = forwardRef<HTMLDivElement, View>(({
   header,
   footer,
   children,
@@ -28,5 +28,3 @@ const View = forwardRef<HTMLDivElement, View>(({
 })
 
 View.displayName = 'View'
-
-export default View

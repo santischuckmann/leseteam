@@ -1,6 +1,6 @@
-import { RequestMethods } from "@/constants";
-import { endpoints } from "@/lib/config/endpoints";
-import axios from "axios";
+import { RequestMethods } from '@/constants'
+import { endpoints } from '@/lib/config/endpoints'
+import axios from 'axios'
 
 export const onChangeInput = <StateType extends Record<string, unknown>>({ update, name, value, strategy } : {
   update: React.Dispatch<React.SetStateAction<StateType>>,
@@ -19,30 +19,45 @@ const api = axios.create({
 })
 
 export const operate = async ({ method = RequestMethods.Get, url, data, onError } : {
-  method: string,
+  method?: string,
   url: string,
-  data: Record<string, unknown>,
+  data?: Record<string, unknown>,
   onError?: () => void;
 }) => {
-  try {
-    switch (method) {
-      case RequestMethods.Get: {
-        const response = await api.get(`api${url}`)  
+  switch (method) {
+  case RequestMethods.Get: {
+    const response = await api.get(`api${url}`)  
 
-        return response.data
-      }
-      case RequestMethods.Post : {
-        const response = await api.post(`api${url}`, data)
-
-        return response.data
-      }
-      case RequestMethods.Put : {
-        const response = await api.post(`api${url}`, data)
-
-        return response.data
-      }
-    }
-  } catch (error) {
-    throw error
+    return response.data
   }
+  case RequestMethods.Post : {
+    const response = await api.post(`api${url}`, data)
+
+    return response.data
+  }
+  case RequestMethods.Put : {
+    const response = await api.put(`api${url}`, data)
+
+    return response.data
+  }
+  }
+}
+
+export const findIndexByIdPropertyInArray = <T extends { _id?: string }>({
+  id,
+  array
+}: { id: string, array: T[] }) => {
+  return array.findIndex(({ _id }) => _id === id)
+}
+
+export const insertInArrayByIndex = function <T>({
+  index,
+  array,
+  item
+}: { index: number, array: T[], item: T}) {
+  const newArray = Array.from(array)
+
+  newArray[index] = item
+
+  return newArray
 }
