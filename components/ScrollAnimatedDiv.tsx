@@ -24,19 +24,13 @@ export const ScrollAnimatedDiv = ({
 }: ScrollAnimatedDivProps) => {
   const animationControl = useAnimation()
 
-<<<<<<< Updated upstream
   const [ref, inView] = useInView()
-=======
-  const [ oncePerMount, setOncePerMount ] = useState(false)
-
-  const [ ref, inView ] = useInView()
->>>>>>> Stashed changes
 
   useEffect(() => {
     if (inView) {
       inViewCallback(animationControl)
     }
-  }, [ animationControl, inView ])
+  }, [animationControl, inView])
 
   return (
     <motion.div

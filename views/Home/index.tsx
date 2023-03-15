@@ -1,7 +1,6 @@
 import View from "@/components/View"
 import Header from "./Header"
 import styles from '@/styles/Home.module.scss'
-<<<<<<< Updated upstream
 import { HomeProps } from "@/pages"
 import React, { FC, MouseEventHandler, useState } from "react"
 import BookReview from "@/components/BookReview"
@@ -9,17 +8,6 @@ import AddElement from "@/components/AddElement"
 import { BookReviewStatus, defaultBookReview, RequestMethods } from "@/constants"
 import { Button, Dialog, TextField } from "@mui/material"
 import { onChangeInput, operate } from "@/utils"
-=======
-import React, { MouseEventHandler, useContext, useState } from 'react'
-import BookReview from '@/components/BookReview/BookReview'
-import { defaultBookReview, RequestMethods } from '@/constants'
-import { Button, Dialog, TextField } from '@mui/material'
-import { onChangeInput } from '@/utils'
-import { AddElement, View } from '@/components'
-import globalStyles from '@/styles/components/globals.module.scss'
-import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReviews'
-import { useOperate } from '@/lib/hooks/useOperate'
->>>>>>> Stashed changes
 
 export const textFields = [
   {
@@ -31,20 +19,9 @@ export const textFields = [
   }
 ]
 
-<<<<<<< Updated upstream
 const HomeView: FC<HomeProps>= ({
   bookReviews
 }) => {
-=======
-const HomeView = () => {
-  const {
-    bookReviews,
-    addBookReview
-  } = useContext(BookReviewsContext) as BookReviewsContextType
-
-  const [ operate, { loading } ] = useOperate()
-
->>>>>>> Stashed changes
   const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null)
   const [ newBookReview, setNewBookReview ] = useState<typeof defaultBookReview>(defaultBookReview)
   const [ bookReviewsToRender, setBookReviewsToRender ] = useState(bookReviews)

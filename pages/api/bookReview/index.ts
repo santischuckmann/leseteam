@@ -13,91 +13,45 @@ export default async function handler(
   await sourceConnection()
 
   switch (req.method) {
-  case RequestMethods.Get: {
-    try {
-      const bookReview = await BookReviewModel
-        .findOne({
-          _id: bookReviewId,
-          ...DefaultOperationFields
+    case RequestMethods.Get: {
+      try {
+        const bookReview = await BookReviewModel.findOne({
+          _id: bookReviewId
         })
         .lean()
 
-      if (!bookReview)
-        throw new Error('No se encontro bookReview con el id dado')
+        if (!bookReview)
+          throw new Error('No se encontro bookReview con el id dado')
   
-      return res.status(200).json({ bookReview })
-    } catch (error) {
-      return res.status(500).json({ message: sendErrorMessage(error), success: false })
+        return res.status(200).json({ data: bookReview })
+      } catch (error) {
+        return res.status(500).json({ message: sendErrorMessage(error), success: false })
+      }
     }
-  }
-  case RequestMethods.Post: {
-    try {
-      const { bookTitle } = req.body
+    case RequestMethods.Post: {
+      try {
+        const { bookTitle } = req.body
 
-      const existsBookReview = await BookReviewModel.exists({
-        bookTitle
-      })
+        const existsBookReview = await BookReviewModel.exists({
+          bookTitle
+        })
   
-      if (existsBookReview)
-        throw new Error('Ya existe un libro con ese titulo')
+        if (existsBookReview)
+          throw new Error('Ya existe un libro con ese titulo')
   
-      const newBookReview = await BookReviewModel.create({
-        bookTitle,
-        status: BookReviewStatus.Pending,
-        ...DefaultOperationFields
-      })
-  
-      return res.status(200).json({ newBookReview, success: true })
-    } catch (error) {
-      return res.status(500).json({ message: sendErrorMessage(error), success: false })
-    }
-  }
-  case RequestMethods.Put: {
-    try {
-      const { bookReviewId, bookTitle, status } = req.body
-
-      const existsBookReview = await BookReviewModel.exists({
-        _id: bookReviewId
-      })
-  
-      if (!existsBookReview)
-        throw new Error('No se encontro reseña')
-  
-      const updatedBookReview = await BookReviewModel.updateOne({
-        _id: bookReviewId
-      }, {
-        $set: {
+        const newBookReview = await BookReviewModel.create({
           bookTitle,
-          status
-        }
-      })
+          status: BookReviewStatus.Pending,
+          ...DefaultOperationFields
+        })
   
-      return res.status(200).json({ updatedBookReview, success: true })
-    } catch (error) {
-      return res.status(500).json({ message: sendErrorMessage(error), success: false })
+        return res.status(200).json({ data: newBookReview, success: true})
+      } catch (error) {
+        return res.status(500).json({ message: sendErrorMessage(error), success: false })
+      }
     }
-  }
-  case RequestMethods.Delete: {
-    try {
-      const existsBookReview = await BookReviewModel.exists({
-        _id: bookReviewId
-      })
-  
-      if (!existsBookReview)
-        throw new Error('No se encontro reseña')
-  
-      await BookReviewModel.updateOne({
-        _id: bookReviewId
-      }, {
-        $set: {
-          isDeleted: true
-        }
-      })
-  
-      return res.status(200).json({ success: true })
-    } catch (error) {
-      return res.status(500).json({ message: sendErrorMessage(error), success: false })
+    case 'DELETE': {
+
     }
-  }
   }
 }
