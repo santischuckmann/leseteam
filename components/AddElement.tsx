@@ -1,7 +1,7 @@
-import { FC, forwardRef, MouseEventHandler } from "react";
+import { FC, forwardRef, MouseEventHandler } from 'react'
 import styles from '@/styles/components/AddElement.module.scss'
-import { IconButton, Tooltip } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import { IconButton, Tooltip } from '@mui/material'
+import { Add as AddIcon } from '@mui/icons-material'
 
 interface AddElementProps {
   title: React.ReactNode;
@@ -9,9 +9,9 @@ interface AddElementProps {
   onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-const AddElement: FC<AddElementProps> = forwardRef(({
+export const AddElement: FC<AddElementProps> = forwardRef(({
   title,
-  tooltipTitle = 'holiwis',
+  tooltipTitle = 'Agrega el elemento',
   onClick
 }) => {
   return (
@@ -24,4 +24,4 @@ const AddElement: FC<AddElementProps> = forwardRef(({
   )
 }) 
 
-export default AddElement
+AddElement.displayName = 'AddElement'
