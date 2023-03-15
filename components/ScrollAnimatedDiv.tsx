@@ -26,9 +26,9 @@ export const ScrollAnimatedDiv = ({
 }: ScrollAnimatedDivProps) => {
   const animationControl = useAnimation()
 
-  const [oncePerMount, setOncePerMount] = useState(false)
+  const [ oncePerMount, setOncePerMount ] = useState(false)
 
-  const [ref, inView] = useInView()
+  const [ ref, inView ] = useInView()
 
   useEffect(() => {
     if (inView && !oncePerMount) {
@@ -36,7 +36,7 @@ export const ScrollAnimatedDiv = ({
 
       inViewCallback(animationControl)
     }
-  }, [animationControl, inView])
+  }, [ animationControl, inView ])
 
   return (
     <motion.div

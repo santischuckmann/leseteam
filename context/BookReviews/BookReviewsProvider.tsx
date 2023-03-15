@@ -1,5 +1,6 @@
 import { BookReview } from '@/constants'
-import { findIndexByIdPropertyInArray, insertInArrayByIndex, operate } from '@/utils'
+import { useOperate } from '@/lib/hooks/useOperate'
+import { deleteInArrayByIndex, findIndexByIdPropertyInArray, insertInArrayByIndex } from '@/utils'
 import React, { FC, useState } from 'react'
 import BookReviewsContext from '.'
 
@@ -14,25 +15,41 @@ export const BookReviewsProvider: FC<BookReviewsProviderProps> = ({
 }) => {
   const [ bookReviews, setBookReviews ] = useState(persistentBookReviews)
 
-  const refetchBookReview = async (bookReviewId: string) => {
-    const { bookReview } = await operate({
-      url: `/bookReview?bookReviewId=${bookReviewId}`
-    })
+  const [ operate ] = useOperate()
 
+  const refetchBookReview = async (bookReviewId: string) => {
     const index = findIndexByIdPropertyInArray<BookReview>({ id: bookReviewId, array: bookReviews })
 
-    const newBookReviews = insertInArrayByIndex({ index, array: bookReviews, item: bookReview })
-    
+    const { bookReview } = await operate({
+      url: `/bookReview?bookReviewId=${bookReviewId}`
+    }) ?? {}
+
+    const newBookReviews =  (() => {
+      if (!bookReview) {
+        return deleteInArrayByIndex({ index, array: bookReviews })
+      }
+
+      return insertInArrayByIndex<BookReview>({ index, array: bookReviews, item: bookReview })
+    })()
+
     setBookReviews(newBookReviews)
   }
 
+  const deleteBookReview = async (bookReviewId: string) => {
+    const index = findIndexByIdPropertyInArray<BookReview>({ id: bookReviewId, array: bookReviews })
+
+    const newBookReviews = deleteInArrayByIndex({ index, array: bookReviews })
+
+    setBookReviews(newBookReviews)
+  }
 
   return (
     <BookReviewsContext.Provider
       value={{
         bookReviews,
         refetchBookReview, 
-        addBookReview: (bookReview) => setBookReviews((prev) => ([ ...prev, bookReview ]))
+        addBookReview: (bookReview) => setBookReviews((prev) => ([ ...prev, bookReview ])),
+        deleteBookReview
       }}>
       {children}
     </BookReviewsContext.Provider>
