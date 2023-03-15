@@ -14,35 +14,32 @@ export const onChangeInput = <StateType extends Record<string, unknown>>({ updat
   }))
 }
 
-const api = axios.create({
-  baseURL: endpoints.nextServer
-})
+export const findIndexByIdPropertyInArray = <T extends { _id?: string }>({
+  id,
+  array
+}: { id: string, array: T[] }) => {
+  return array.findIndex(({ _id }) => _id === id)
+}
 
-export const operate = async ({ method = RequestMethods.Get, url, data, onError } : {
-  method: string,
-  url: string,
-  data: Record<string, unknown>,
-  onError?: () => void;
-}) => {
-  try {
-    switch (method) {
-      case RequestMethods.Get: {
-        const response = await api.get(`api${url}`)  
+export const insertInArrayByIndex = function <T>({
+  index,
+  array,
+  item
+}: { index: number, array: T[], item: T}) {
+  const newArray = Array.from(array)
 
-        return response.data
-      }
-      case RequestMethods.Post : {
-        const response = await api.post(`api${url}`, data)
+  newArray[index] = item
 
-        return response.data
-      }
-      case RequestMethods.Put : {
-        const response = await api.post(`api${url}`, data)
+  return newArray
+}
 
-        return response.data
-      }
-    }
-  } catch (error) {
-    throw error
-  }
+export const deleteInArrayByIndex = function <T>({
+  index,
+  array
+}: { index: number, array: T[] }) {
+  const newArray = Array.from(array)
+
+  newArray.splice(index, 1)
+
+  return newArray
 }

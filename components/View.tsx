@@ -1,6 +1,6 @@
-import { FC, forwardRef } from 'react';
+import { forwardRef } from 'react'
 import styles from '@/styles/components/View.module.scss'
-import DefaultHead from './DefaultHead';
+import DefaultHead from './DefaultHead'
 
 interface View {
   header: React.ReactNode;
