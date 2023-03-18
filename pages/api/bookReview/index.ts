@@ -17,11 +17,10 @@ export default async function handler(
     try {
       const bookReview = await BookReviewModel
         .findOne({
-          _id: bookReviewId
+          _id: bookReviewId,
+          ...DefaultOperationFields
         })
         .lean()
-
-      console.log({ bookReview })
 
       if (!bookReview)
         throw new Error('No se encontro bookReview con el id dado')
@@ -57,8 +56,6 @@ export default async function handler(
     try {
       const { bookReviewId, bookTitle, status } = req.body
 
-      console.log(req.body)
-
       const existsBookReview = await BookReviewModel.exists({
         _id: bookReviewId
       })
@@ -75,7 +72,29 @@ export default async function handler(
         }
       })
   
-      return res.status(200).json({ data: updatedBookReview, success: true })
+      return res.status(200).json({ updatedBookReview, success: true })
+    } catch (error) {
+      return res.status(500).json({ message: sendErrorMessage(error), success: false })
+    }
+  }
+  case RequestMethods.Delete: {
+    try {
+      const existsBookReview = await BookReviewModel.exists({
+        _id: bookReviewId
+      })
+  
+      if (!existsBookReview)
+        throw new Error('No se encontro reseña')
+  
+      await BookReviewModel.updateOne({
+        _id: bookReviewId
+      }, {
+        $set: {
+          isDeleted: true
+        }
+      })
+  
+      return res.status(200).json({ success: true })
     } catch (error) {
       return res.status(500).json({ message: sendErrorMessage(error), success: false })
     }

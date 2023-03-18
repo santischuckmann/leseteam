@@ -5,6 +5,7 @@ export interface BookReviewsContextType {
   bookReviews: BookReview[];
   refetchBookReview: (bookReviewId: string) => Promise<void>;
   addBookReview: (bookReview: Omit<BookReview, '_id'>) => void;
+  deleteBookReview: (bookReviewId: string) => Promise<void>;
 }
 
 const BookReviewsContext = createContext<BookReviewsContextType | null>(null)

@@ -4,10 +4,11 @@ import React, { MouseEventHandler, useContext, useState } from 'react'
 import BookReview from '@/components/BookReview/BookReview'
 import { defaultBookReview, RequestMethods } from '@/constants'
 import { Button, Dialog, TextField } from '@mui/material'
-import { onChangeInput, operate } from '@/utils'
+import { onChangeInput } from '@/utils'
 import { AddElement, View } from '@/components'
 import globalStyles from '@/styles/components/globals.module.scss'
 import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReviews'
+import { useOperate } from '@/lib/hooks/useOperate'
 
 export const textFields = [
   {
@@ -23,7 +24,7 @@ const HomeView = () => {
     addBookReview
   } = useContext(BookReviewsContext) as BookReviewsContextType
 
-  console.log({ bookReviews })
+  const [ operate, { loading } ] = useOperate()
 
   const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null)
   const [ newBookReview, setNewBookReview ] = useState<typeof defaultBookReview>(defaultBookReview)
