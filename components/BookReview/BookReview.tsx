@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, useState, useContext } from 'react'
+import { FC, MouseEventHandler, useState } from 'react'
 import styles from '@/styles/components/BookReview.module.scss'
 import { 
   Edit as EditButton,
@@ -6,28 +6,27 @@ import {
 } from '@mui/icons-material'
 import { Box, Button, CircularProgress, Dialog, IconButton, TextField } from '@mui/material'
 import { textFields } from '@/views/Home'
-import { onChangeInput } from '@/utils'
-import { BookReview, defaultBookReview, RequestMethods } from '@/constants'
+import { onChangeInput } from '@/lib/utils'
+import { BookReview, defaultBookReview } from '@/constants'
 import { ScrollAnimatedDiv } from '../ScrollAnimatedDiv'
 import globalStyles from '@/styles/components/globals.module.scss'
-import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReviews'
-import { useOperate } from '@/lib/hooks/useOperate'
 
 interface BookReviewProps {
   bookReview: BookReview
+  onRemoveBookReview: () => Promise<void>;
+  onConfirmEdition: (newBookReview: BookReview) => Promise<void>;
+  loading: boolean;
 }
 
 const BookReview: FC<BookReviewProps> = ({
   bookReview: {
     bookTitle, 
-    status = 'PENDING',
-    _id: bookReviewId
-  }
+    status = 'PENDING'
+  },
+  onRemoveBookReview,
+  onConfirmEdition,
+  loading
 }) => {
-  const { refetchBookReview } = useContext(BookReviewsContext) as BookReviewsContextType
-
-  const [ operate, { loading } ] = useOperate()
-
   const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null)
   const [ bookReview, setBookReview ] = useState<typeof defaultBookReview>(defaultBookReview)
 
@@ -38,15 +37,9 @@ const BookReview: FC<BookReviewProps> = ({
   }
 
   const _handleConfirmBookReviewEdition = async () => {
-    await operate({ 
-      method: RequestMethods.Put, 
-      url: '/bookReview', 
-      data: { ...bookReview, bookReviewId }
-    })
+    onConfirmEdition(bookReview)
 
     setAnchorEl(null)
-
-    await refetchBookReview(bookReviewId ?? '')
   }
 
   const _handleOpen: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -56,13 +49,7 @@ const BookReview: FC<BookReviewProps> = ({
   }
 
   const _handleRemoveBookReview = async () => {
-    await operate({ 
-      method: RequestMethods.Delete, 
-      url: `/bookReview?bookReviewId=${bookReviewId}`, 
-      data: { ...bookReview, bookReviewId }
-    })
-
-    await refetchBookReview(bookReviewId ?? '')
+    onRemoveBookReview()
   }
 
   return (

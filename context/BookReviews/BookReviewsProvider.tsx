@@ -1,6 +1,6 @@
 import { BookReview } from '@/constants'
 import { useOperate } from '@/lib/hooks/useOperate'
-import { deleteInArrayByIndex, findIndexByIdPropertyInArray, insertInArrayByIndex } from '@/utils'
+import { deleteInArrayByIndex, findIndexByIdPropertyInArray, insertInArrayByIndex } from '@/lib/utils'
 import React, { FC, useState } from 'react'
 import BookReviewsContext from '.'
 

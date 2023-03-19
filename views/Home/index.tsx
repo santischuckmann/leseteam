@@ -1,14 +1,14 @@
 import Header from './Header'
 import styles from '@/styles/Home.module.scss'
 import React, { MouseEventHandler, useContext, useState } from 'react'
-import BookReview from '@/components/BookReview/BookReview'
 import { defaultBookReview, RequestMethods } from '@/constants'
 import { Button, Dialog, TextField } from '@mui/material'
-import { onChangeInput } from '@/utils'
 import { AddElement, View } from '@/components'
 import globalStyles from '@/styles/components/globals.module.scss'
 import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReviews'
 import { useOperate } from '@/lib/hooks/useOperate'
+import { BookReviewContainer } from '@/containers/BookReview'
+import { onChangeInput } from '@/lib/utils'
 
 export const textFields = [
   {
@@ -24,7 +24,7 @@ const HomeView = () => {
     addBookReview
   } = useContext(BookReviewsContext) as BookReviewsContextType
 
-  const [ operate, { loading } ] = useOperate()
+  const [ operate ] = useOperate()
 
   const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null)
   const [ newBookReview, setNewBookReview ] = useState<typeof defaultBookReview>(defaultBookReview)
@@ -62,7 +62,7 @@ const HomeView = () => {
       <div className={styles.container}>
         <div className={styles.bookReviewContainer}>
           {bookReviews.map((bookReview, index) => 
-            <BookReview 
+            <BookReviewContainer 
               key={`${bookReview.bookTitle}-${index}`}
               bookReview={bookReview} />
           )}

@@ -1,6 +1,10 @@
-import { RequestMethods } from '@/constants'
-import { endpoints } from '@/lib/config/endpoints'
-import axios from 'axios'
+export const sendErrorMessage = (error: unknown) => {
+  if (error instanceof Error) {
+    return error.message
+  }
+
+  return undefined
+}
 
 export const onChangeInput = <StateType extends Record<string, unknown>>({ update, name, value, strategy } : {
   update: React.Dispatch<React.SetStateAction<StateType>>,
