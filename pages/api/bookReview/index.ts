@@ -4,6 +4,8 @@ import sourceConnection from '@/lib/backing/connections/mongo'
 import BookReviewModel from '@/lib/models/BookReview'
 import { BookReviewStatus, DefaultOperationFields, RequestMethods } from '@/constants'
 import { sendErrorMessage } from '@/lib/utils'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/[...nextauth]'
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,12 +14,19 @@ export default async function handler(
   const { query : { bookReviewId } } = req
   await sourceConnection()
 
+  const session = await getServerSession(req, res, authOptions)
+
   switch (req.method) {
   case RequestMethods.Get: {
     try {
+      if (!session) {
+        throw new Error ('Error de autenticacion')
+      }
+
       const bookReview = await BookReviewModel
         .findOne({
           _id: bookReviewId,
+          email: session.user?.email,
           ...DefaultOperationFields
         })
         .lean()
@@ -32,6 +41,10 @@ export default async function handler(
   }
   case RequestMethods.Post: {
     try {
+      if (!session) {
+        throw new Error ('Error de autenticacion')
+      }
+
       const { bookTitle } = req.body
 
       const existsBookReview = await BookReviewModel.exists({
@@ -44,6 +57,7 @@ export default async function handler(
       const newBookReview = await BookReviewModel.create({
         bookTitle,
         status: BookReviewStatus.Pending,
+        email: session.user?.email,
         ...DefaultOperationFields
       })
   
@@ -54,10 +68,15 @@ export default async function handler(
   }
   case RequestMethods.Put: {
     try {
+      if (!session) {
+        throw new Error ('Error de autenticacion')
+      }
+
       const { bookReviewId, bookTitle, status } = req.body
 
       const existsBookReview = await BookReviewModel.exists({
-        _id: bookReviewId
+        _id: bookReviewId,
+        email: session.user?.email
       })
   
       if (!existsBookReview)
@@ -79,8 +98,13 @@ export default async function handler(
   }
   case RequestMethods.Delete: {
     try {
+      if (!session) {
+        throw new Error ('Error de autenticacion')
+      }
+
       const existsBookReview = await BookReviewModel.exists({
-        _id: bookReviewId
+        _id: bookReviewId,
+        email: session.user?.email
       })
   
       if (!existsBookReview)
