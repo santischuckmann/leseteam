@@ -75,8 +75,7 @@ export default async function handler(
       const { bookReviewId, bookTitle, status } = req.body
 
       const existsBookReview = await BookReviewModel.exists({
-        _id: bookReviewId,
-        email: session.user?.email
+        _id: bookReviewId
       })
   
       if (!existsBookReview)
@@ -103,8 +102,7 @@ export default async function handler(
       }
 
       const existsBookReview = await BookReviewModel.exists({
-        _id: bookReviewId,
-        email: session.user?.email
+        _id: bookReviewId
       })
   
       if (!existsBookReview)
