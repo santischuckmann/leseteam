@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 
-const databaseUri = process.env.DATABASE_CONNECTION;
+const databaseUri = process.env.DATABASE_CONNECTION
 
 const connection : Record<string, unknown> = {}
 
@@ -11,6 +11,7 @@ const sourceConnection = async () => {
     }
     
     const db = await mongoose.connect(databaseUri!)
+
 
     connection.isConnected = db.connections[0].readyState
   } catch (error) {

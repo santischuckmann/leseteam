@@ -6,12 +6,10 @@ import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
 import { SessionContextValue } from 'next-auth/react'
 import { authOptions } from './api/auth/[...nextauth]'
+import { BookReview } from '@/constants'
 
 export interface HomeProps {
-  bookReviews: {
-    bookTitle: string;
-    status: string;
-  }[];
+  bookReviews: BookReview[];
   session: SessionContextValue
 }
 
@@ -29,7 +27,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   if (!session) {
     return {
-      redirect: { destination: '/login', permanent: false }
+      redirect: { destination: '/api/auth/signin', permanent: false }
     }
   }
   

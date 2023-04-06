@@ -21,7 +21,8 @@ interface BookReviewProps {
 const BookReview: FC<BookReviewProps> = ({
   bookReview: {
     bookTitle, 
-    status = 'PENDING'
+    status = 'PENDING',
+    review
   },
   onRemoveBookReview,
   onConfirmEdition,
@@ -62,7 +63,7 @@ const BookReview: FC<BookReviewProps> = ({
         initial={'hidden'}
         inViewCallback={(control) => control.start('visible')}
         containerClassName={styles.root}>
-        <Box display='flex' flexDirection='row' justifyContent='space-between' width='100%'>
+        <Box className={styles.content} display='flex' flexDirection='row' justifyContent='space-between' width='100%'>
           <IconButton onClick={_handleOpen}>
             <EditButton />
           </IconButton>
@@ -71,6 +72,7 @@ const BookReview: FC<BookReviewProps> = ({
           </IconButton>
         </Box>
         <h1>{bookTitle}</h1>
+        <p>{review}</p>
         <span>{status}</span>
       </ScrollAnimatedDiv>
       <Dialog

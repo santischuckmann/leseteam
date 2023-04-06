@@ -28,7 +28,7 @@ export default async function handler(
         .find({
           status: { $in: statuses },
           ...DefaultOperationFields,
-          email: session.user?.email
+          userId: session.user?.id,
         })
         .lean()
   

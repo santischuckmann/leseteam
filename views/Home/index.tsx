@@ -15,6 +15,14 @@ export const textFields = [
     name: 'bookTitle',
     value: (state: typeof defaultBookReview) => state.bookTitle,
     placeholder: 'Escribe el nombre del libro a reseñar'
+  },
+  {
+    name: 'review',
+    value: (state: typeof defaultBookReview) => state.review,
+    placeholder: 'Escribe la reseña',
+    props: {
+      multiline: true
+    }
   }
 ]
 
@@ -35,7 +43,7 @@ const HomeView = () => {
     setAnchorEl(event.currentTarget)
   }
 
-  const _handleChangeNewBookReview = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const _handleChangeNewBookReview = function (event: React.ChangeEvent<HTMLInputElement>) {
     const { target: { name, value } } = event ?? {}
 
     onChangeInput({ update: setNewBookReview, name, value })
@@ -47,6 +55,8 @@ const HomeView = () => {
     setNewBookReview(defaultBookReview)
 
     setAnchorEl(null)
+
+    console.log('entra aca?')
 
     await operate({ 
       method: RequestMethods.Post, 
@@ -77,13 +87,14 @@ const HomeView = () => {
           }}
           onClose={() => setAnchorEl(null)}
           open={Boolean(anchorEl)}>
-          {textFields.map(({ name, placeholder, value }) => (
+          {textFields?.map(({ name, placeholder, value, props = {} }) => (
             <TextField
               key={`homeView-${name}`}
               name={name}
               value={value(newBookReview)}
               onChange={_handleChangeNewBookReview}
-              placeholder={placeholder}/>
+              placeholder={placeholder}
+              {...props} />
           ))}
           <Button onClick={_handleSaveNewBookReview}>
               Guardar reseña

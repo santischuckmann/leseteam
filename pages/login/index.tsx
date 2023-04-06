@@ -1,7 +1,7 @@
-import { useSession } from 'next-auth/react'
+import { LoginView } from '@/views/Login'
 
 export default function Login () {
   return (
-    <div>plis login</div>
+    <LoginView />
   )
 }

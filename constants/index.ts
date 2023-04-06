@@ -25,11 +25,13 @@ export const RequestMethodsAxios = {
 
 export const defaultBookReview = {
   bookTitle : '',
-  status: BookReviewStatus.Pending
+  status: BookReviewStatus.Pending,
+  review: ''
 }
 
 export interface BookReview {
   bookTitle: string;
   status: typeof BookReviewStatus[keyof typeof BookReviewStatus];
+  review: string;
   _id?: string;
 }

@@ -26,7 +26,7 @@ export default async function handler(
       const bookReview = await BookReviewModel
         .findOne({
           _id: bookReviewId,
-          email: session.user?.email,
+          userId: session.user?.id,
           ...DefaultOperationFields
         })
         .lean()
@@ -45,7 +45,7 @@ export default async function handler(
         throw new Error ('Error de autenticacion')
       }
 
-      const { bookTitle } = req.body
+      const { bookTitle, review } = req.body
 
       const existsBookReview = await BookReviewModel.exists({
         bookTitle
@@ -56,8 +56,9 @@ export default async function handler(
   
       const newBookReview = await BookReviewModel.create({
         bookTitle,
+        review,
         status: BookReviewStatus.Pending,
-        email: session.user?.email,
+        userId: session.user?.id,
         ...DefaultOperationFields
       })
   
