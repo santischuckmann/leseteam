@@ -23,6 +23,11 @@ export default function Home (props: HomeProps) {
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=1800, stale-while-revalidate=86400'
+  )
+  
   const session = await getServerSession(context.req, context.res, authOptions)
 
   if (!session) {
