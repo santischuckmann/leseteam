@@ -56,8 +56,6 @@ const HomeView = () => {
 
     setAnchorEl(null)
 
-    console.log('entra aca?')
-
     await operate({ 
       method: RequestMethods.Post, 
       url: '/bookReview', 
