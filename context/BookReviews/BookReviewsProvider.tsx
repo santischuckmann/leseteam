@@ -11,7 +11,7 @@ interface BookReviewsProviderProps {
 
 export const BookReviewsProvider: FC<BookReviewsProviderProps> = ({ 
   children,
-  persistentBookReviews
+  persistentBookReviews = []
 }) => {
   const [ bookReviews, setBookReviews ] = useState(persistentBookReviews)
 
