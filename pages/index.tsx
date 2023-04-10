@@ -23,27 +23,27 @@ export default function Home (props: HomeProps) {
   ) 
 }
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  try {
-    const response = await axios.get(`${endpoints.nextServer}/api/bookReview/getMany`, {
-      withCredentials: true,
-      headers: {
-        Cookie: context.req.headers.cookie
-      }
-    })
+// export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+//   try {
+//     const response = await axios.get(`${endpoints.nextServer}/api/bookReview/getMany`, {
+//       withCredentials: true,
+//       headers: {
+//         Cookie: context.req.headers.cookie
+//       }
+//     })
     
-    const { bookReviews } = response.data ?? []
+//     const { bookReviews } = response.data ?? []
   
-    return {
-      props: {
-        bookReviews
-      }
-    }
-  } catch (error) {
-    return {
-      props: {
-        bookReviews: []
-      }
-    }
-  }
-}
+//     return {
+//       props: {
+//         bookReviews
+//       }
+//     }
+//   } catch (error) {
+//     return {
+//       props: {
+//         bookReviews: []
+//       }
+//     }
+//   }
+// }
