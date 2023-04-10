@@ -3,10 +3,9 @@ import { endpoints } from '@/lib/config/endpoints'
 import HomeView from '@/views/Home'
 import axios from 'axios'
 import { GetServerSidePropsContext } from 'next'
-import { getServerSession } from 'next-auth'
 import { SessionContextValue } from 'next-auth/react'
-import { authOptions } from './api/auth/[...nextauth]'
 import { BookReview } from '@/constants'
+import { AuthorizedPage } from '@/containers/AuthorizedPage'
 
 export interface HomeProps {
   bookReviews: BookReview[];
@@ -17,37 +16,34 @@ export interface HomeProps {
 export default function Home (props: HomeProps) {
   return (
     <BookReviewsProvider persistentBookReviews={props.bookReviews}>
-      <HomeView />
+      <AuthorizedPage>
+        <HomeView />
+      </AuthorizedPage>
     </BookReviewsProvider>
   ) 
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=1800, stale-while-revalidate=86400'
-  )
+  try {
+    const response = await axios.get(`${endpoints.nextServer}/api/bookReview/getMany`, {
+      withCredentials: true,
+      headers: {
+        Cookie: context.req.headers.cookie
+      }
+    })
+    
+    const { bookReviews } = response.data ?? []
   
-  const session = await getServerSession(context.req, context.res, authOptions)
-
-  if (!session) {
     return {
-      redirect: { destination: '/api/auth/signin', permanent: false }
+      props: {
+        bookReviews
+      }
     }
-  }
-  
-  const response = await axios.get(`${endpoints.nextServer}/api/bookReview/getMany`, {
-    withCredentials: true,
-    headers: {
-      Cookie: context.req.headers.cookie
-    }
-  })
-  
-  const { bookReviews } = response.data ?? []
-
-  return {
-    props: {
-      bookReviews
+  } catch (error) {
+    return {
+      props: {
+        bookReviews: []
+      }
     }
   }
 }
