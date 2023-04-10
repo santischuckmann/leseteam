@@ -1,7 +1,7 @@
 import { FC, forwardRef, MouseEventHandler } from 'react'
 import styles from '@/styles/components/AddElement.module.scss'
 import { IconButton, Tooltip } from '@mui/material'
-import { Add as AddIcon } from '@mui/icons-material'
+import AddIcon from '@mui/icons-material/Add'
 
 interface AddElementProps {
   title: React.ReactNode;

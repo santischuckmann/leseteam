@@ -27,13 +27,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     'Cache-Control',
     'public, s-maxage=1800, stale-while-revalidate=86400'
   )
-
-  console.time('session')
-  console.time('all')
   
   const session = await getServerSession(context.req, context.res, authOptions)
-
-  console.timeEnd('session')
 
   if (!session) {
     return {
@@ -47,8 +42,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       Cookie: context.req.headers.cookie
     }
   })
-
-  console.timeEnd('all')
   
   const { bookReviews } = response.data ?? []
 

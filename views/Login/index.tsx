@@ -1,7 +1,7 @@
 import styles from '@/styles/Login.module.scss'
 import { Box, IconButton, Typography } from '@mui/material'
-import { GitHub as GithubIcon } from '@mui/icons-material'
-import { Google as GoogleIcon } from '@mui/icons-material'
+import GithubIcon from '@mui/icons-material/GitHub'
+import GoogleIcon from '@mui/icons-material/Google'
 import { signIn } from 'next-auth/react'
 
 export const LoginView = () => {
