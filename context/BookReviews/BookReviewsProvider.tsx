@@ -43,15 +43,15 @@ export const BookReviewsProvider: FC<BookReviewsProviderProps> = ({
     setBookReviews(newBookReviews)
   }
 
-  useEffect(() => {
-    (async() => {
-      const { bookReviews } = await operate({
-        url: '/bookReview/getMany'
-      })
+  // useEffect(() => {
+  //   (async() => {
+  //     const { bookReviews } = await operate({
+  //       url: '/bookReview/getMany'
+  //     })
   
-      setBookReviews(bookReviews)
-    })()
-  }, [])
+  //     setBookReviews(bookReviews)
+  //   })()
+  // }, [])
 
   return (
     <BookReviewsContext.Provider
