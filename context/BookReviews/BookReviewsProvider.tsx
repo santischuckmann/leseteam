@@ -1,7 +1,7 @@
 import { BookReview } from '@/constants'
 import { useOperate } from '@/lib/hooks/useOperate'
 import { deleteInArrayByIndex, findIndexByIdPropertyInArray, insertInArrayByIndex } from '@/lib/utils'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import BookReviewsContext from '.'
 
 interface BookReviewsProviderProps {
@@ -42,16 +42,6 @@ export const BookReviewsProvider: FC<BookReviewsProviderProps> = ({
 
     setBookReviews(newBookReviews)
   }
-
-  // useEffect(() => {
-  //   (async() => {
-  //     const { bookReviews } = await operate({
-  //       url: '/bookReview/getMany'
-  //     })
-  
-  //     setBookReviews(bookReviews)
-  //   })()
-  // }, [])
 
   return (
     <BookReviewsContext.Provider

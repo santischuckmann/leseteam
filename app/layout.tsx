@@ -1,3 +1,5 @@
+import '@/styles/globals.css'
+
 export const metadata = {
   title: 'Books application!',
   description: 'Welcome to Next.js',

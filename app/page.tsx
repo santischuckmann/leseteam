@@ -2,6 +2,9 @@ import axios from 'axios'
 import HomePage from './home-page'
 import { endpoints } from '@/lib/config/endpoints'
 import { headers } from 'next/headers'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { redirect } from 'next/navigation'
 
 async function getBookReviews() {
   try {
@@ -21,6 +24,12 @@ async function getBookReviews() {
 }
 
 export default async function Page() {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    redirect('/api/auth/signin')
+  }
+
   const bookReviews = await getBookReviews()
 
   return <HomePage bookReviews={bookReviews} />

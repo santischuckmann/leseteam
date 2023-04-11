@@ -1,7 +1,6 @@
 'use client'
 import HomeView from '@/views/Home'
 import { BookReview } from '@/constants'
-import { AuthorizedPage } from '@/containers/AuthorizedPage'
 import Providers from './providers'
 
 export interface HomeProps {
@@ -12,9 +11,7 @@ export interface HomeProps {
 export default function HomePage ({ bookReviews }: HomeProps) {
   return (
     <Providers bookReviews={bookReviews}>
-      <AuthorizedPage>
-        <HomeView />
-      </AuthorizedPage>
+      <HomeView />
     </Providers>
   ) 
 }

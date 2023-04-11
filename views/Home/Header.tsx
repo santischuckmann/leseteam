@@ -1,3 +1,4 @@
+'use client'
 import styles from '@/styles/Home.module.scss'
 import { useSession } from 'next-auth/react'
 
