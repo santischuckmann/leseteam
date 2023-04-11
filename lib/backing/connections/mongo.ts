@@ -12,6 +12,7 @@ const sourceConnection = async () => {
     
     const db = await mongoose.connect(databaseUri!)
 
+    db.set('strictQuery', true)
 
     connection.isConnected = db.connections[0].readyState
   } catch (error) {
