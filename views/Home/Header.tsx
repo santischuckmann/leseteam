@@ -1,15 +1,16 @@
 'use client'
 import styles from '@/styles/Home.module.scss'
-import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 
-const Header = () => {
-  const { data: session } = useSession()
+const Header = ({
+  session
+}: { session: Session | null }) => {
   return (
     <header className={styles.header}>
       <span>Leseteam</span>
       {session && (
         <div>
-          {session.user?.name}
+          {session?.user?.name}
         </div>
       )}
     </header>

@@ -1,9 +1,8 @@
-import Header from './Header'
 import styles from '@/styles/Home.module.scss'
 import React, { MouseEventHandler, useContext, useState } from 'react'
 import { defaultBookReview, RequestMethods } from '@/constants'
 import { Button, Dialog, TextField } from '@mui/material'
-import { AddElement, View } from '@/components'
+import { AddElement } from '@/components'
 import globalStyles from '@/styles/components/globals.module.scss'
 import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReviews'
 import { useOperate } from '@/lib/hooks/useOperate'
@@ -64,42 +63,38 @@ const HomeView = () => {
   }
 
   return (
-    <View
-      footer={<footer className={styles.footer}>hola, soy el footer</footer>}
-      header={<Header />}>
-      <div className={styles.container}>
-        <div className={styles.bookReviewContainer}>
-          {bookReviews.map((bookReview, index) => 
-            <BookReviewContainer 
-              key={`${bookReview.bookTitle}-${index}`}
-              bookReview={bookReview} />
-          )}
-        </div>
-        <AddElement
-          onClick={_handleAddBookReview}
-          title='Añadi una reseña' 
-          tooltipTitle='La reseña debe tener al menos 150 caracteres' />
-        <Dialog
-          classes={{
-            paper: globalStyles.dialogPaper
-          }}
-          onClose={() => setAnchorEl(null)}
-          open={Boolean(anchorEl)}>
-          {textFields?.map(({ name, placeholder, value, props = {} }) => (
-            <TextField
-              key={`homeView-${name}`}
-              name={name}
-              value={value(newBookReview)}
-              onChange={_handleChangeNewBookReview}
-              placeholder={placeholder}
-              {...props} />
-          ))}
-          <Button onClick={_handleSaveNewBookReview}>
-              Guardar reseña
-          </Button>
-        </Dialog>
+    <div className={styles.container}>
+      <div className={styles.bookReviewContainer}>
+        {bookReviews.map((bookReview, index) => 
+          <BookReviewContainer 
+            key={`${bookReview.bookTitle}-${index}`}
+            bookReview={bookReview} />
+        )}
       </div>
-    </View>
+      <AddElement
+        onClick={_handleAddBookReview}
+        title='Añadi una reseña' 
+        tooltipTitle='La reseña debe tener al menos 150 caracteres' />
+      <Dialog
+        classes={{
+          paper: globalStyles.dialogPaper
+        }}
+        onClose={() => setAnchorEl(null)}
+        open={Boolean(anchorEl)}>
+        {textFields?.map(({ name, placeholder, value, props = {} }) => (
+          <TextField
+            key={`homeView-${name}`}
+            name={name}
+            value={value(newBookReview)}
+            onChange={_handleChangeNewBookReview}
+            placeholder={placeholder}
+            {...props} />
+        ))}
+        <Button onClick={_handleSaveNewBookReview}>
+              Guardar reseña
+        </Button>
+      </Dialog>
+    </div>
   )
 }
 
