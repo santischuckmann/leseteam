@@ -12,19 +12,25 @@
   }
 }
 
-.footer {
-  margin-top: auto;
+.main {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  min-height: 80vh;
 }
 
 .container {
   background-color:lightcyan;
   width: 100vw;
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3rem;
   padding: 2rem;
+  min-height: 90vh;
+  height: fit-content;
 }
 
 .bookReviewContainer {
@@ -32,4 +38,11 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+}
+
+.footer {
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  overflow-x: hidden;
 }

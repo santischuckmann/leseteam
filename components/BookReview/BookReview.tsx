@@ -75,7 +75,7 @@ const BookReview: FC<BookReviewProps> = ({
             {loading ? <CircularProgress /> : <DeleteIcon /> }
           </IconButton>
         </Box>
-        <h1>{bookTitle}</h1>
+        <h2>{bookTitle}</h2>
         <p>{review}</p>
         <span>{status}</span>
       </ScrollAnimatedDiv>

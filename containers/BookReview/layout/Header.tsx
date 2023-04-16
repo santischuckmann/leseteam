@@ -1,8 +1,7 @@
-'use client'
 import styles from '@/styles/Home.module.scss'
 import { Session } from 'next-auth'
 
-const Header = ({
+export const Header = ({
   session
 }: { session: Session | null }) => {
   return (

@@ -1,7 +1,7 @@
 import styles from '@/styles/Home.module.scss'
 import React, { MouseEventHandler, useContext, useState } from 'react'
 import { defaultBookReview, RequestMethods } from '@/constants'
-import { Button, Dialog, TextField } from '@mui/material'
+import { Button, Dialog, TextField, Typography } from '@mui/material'
 import { AddElement } from '@/components'
 import globalStyles from '@/styles/components/globals.module.scss'
 import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReviews'
@@ -65,6 +65,9 @@ const HomeView = () => {
   return (
     <div className={styles.container}>
       <div className={styles.bookReviewContainer}>
+        {!bookReviews.length && (
+          <Typography>Añadí tu primer reseña!</Typography>
+        )}
         {bookReviews.map((bookReview, index) => 
           <BookReviewContainer 
             key={`${bookReview.bookTitle}-${index}`}

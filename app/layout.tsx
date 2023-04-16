@@ -1,8 +1,8 @@
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import '@/styles/globals.css'
-import Header from '@/views/Home/Header'
 import { getServerSession } from 'next-auth'
 import styles from '@/styles/Home.module.scss'
+import { Footer, Header } from '@/containers/BookReview/layout'
 
 
 export const metadata = {
@@ -22,8 +22,10 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Header session={session} />
-        {children}
-        <footer className={styles.footer}>hola, soy el footer</footer>
+        <main className={styles.main}>
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )

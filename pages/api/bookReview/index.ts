@@ -48,18 +48,18 @@ export default async function handler(
       const { bookTitle, review } = req.body
 
       const existsBookReview = await BookReviewModel.exists({
-        bookTitle
+        bookTitle,
+        userId: session.user?.id
       })
   
       if (existsBookReview)
-        throw new Error('Ya existe un libro con ese titulo')
+        throw new Error('Ya escribiste una reseña para este libro')
   
       const newBookReview = await BookReviewModel.create({
         bookTitle,
         review,
         status: BookReviewStatus.Pending,
-        userId: session.user?.id,
-        ...DefaultOperationFields
+        userId: session.user?.id
       })
   
       return res.status(200).json({ newBookReview, success: true })
