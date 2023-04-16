@@ -73,7 +73,7 @@ export default async function handler(
         throw new Error ('Error de autenticacion')
       }
 
-      const { bookReviewId, bookTitle, status } = req.body
+      const { bookReviewId, bookTitle, status, review } = req.body
 
       const existsBookReview = await BookReviewModel.exists({
         _id: bookReviewId
@@ -82,14 +82,17 @@ export default async function handler(
       if (!existsBookReview)
         throw new Error('No se encontro reseña')
   
-      const updatedBookReview = await BookReviewModel.updateOne({
-        _id: bookReviewId
-      }, {
-        $set: {
-          bookTitle,
-          status
-        }
-      })
+      const updatedBookReview = await BookReviewModel
+        .updateOne({
+          _id: bookReviewId
+        }, {
+          $set: {
+            review,
+            bookTitle,
+            status
+          }
+        })
+        .lean()
   
       return res.status(200).json({ updatedBookReview, success: true })
     } catch (error) {

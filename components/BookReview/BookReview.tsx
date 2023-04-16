@@ -7,7 +7,7 @@ import {
 import { Box, Button, CircularProgress, Dialog, IconButton, TextField } from '@mui/material'
 import { textFields } from '@/views/Home'
 import { onChangeInput } from '@/lib/utils'
-import { BookReview, defaultBookReview } from '@/constants'
+import { BookReview } from '@/constants'
 import { ScrollAnimatedDiv } from '../ScrollAnimatedDiv'
 import globalStyles from '@/styles/components/globals.module.scss'
 
@@ -29,16 +29,20 @@ const BookReview: FC<BookReviewProps> = ({
   loading
 }) => {
   const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null)
-  const [ bookReview, setBookReview ] = useState<typeof defaultBookReview>(defaultBookReview)
+  const [ editableBookReview, setEditableBookReview ] = useState({
+    bookTitle,
+    status,
+    review
+  })
 
   const _handleChangeNewBookReview = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target: { name, value } } = event
 
-    onChangeInput({ update: setBookReview, name, value })
+    onChangeInput({ update: setEditableBookReview, name, value })
   }
 
   const _handleConfirmBookReviewEdition = async () => {
-    onConfirmEdition(bookReview)
+    onConfirmEdition(editableBookReview)
 
     setAnchorEl(null)
   }
@@ -81,12 +85,12 @@ const BookReview: FC<BookReviewProps> = ({
         }}
         onClose={() => setAnchorEl(null)}
         open={Boolean(anchorEl)}>
-        {textFields.map(({ name, placeholder, value }) => (
+        {textFields.map(({ name, placeholder }) => (
           <TextField
             key={`bookReview-${name}`}
             variant='outlined'
             name={name}
-            value={value(bookReview)}
+            value={editableBookReview[name as keyof typeof editableBookReview]}
             onChange={_handleChangeNewBookReview}
             placeholder={placeholder}/>
         ))}
