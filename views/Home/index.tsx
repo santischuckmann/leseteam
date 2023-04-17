@@ -1,7 +1,7 @@
 import styles from '@/styles/Home.module.scss'
 import React, { MouseEventHandler, useContext, useState } from 'react'
 import { defaultBookReview, RequestMethods } from '@/constants'
-import { Button, Dialog, TextField, Typography } from '@mui/material'
+import { Box, Button, Dialog, TextField, Typography } from '@mui/material'
 import { AddElement } from '@/components'
 import globalStyles from '@/styles/components/globals.module.scss'
 import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReviews'
@@ -64,6 +64,9 @@ const HomeView = () => {
 
   return (
     <div className={styles.container}>
+      <Box display='flex' justifyContent='flex-start' width='90%'>
+        <Typography>Tus reseñas:</Typography>
+      </Box>
       <div className={styles.bookReviewContainer}>
         {!bookReviews.length && (
           <Typography>Añadí tu primer reseña!</Typography>
