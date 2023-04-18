@@ -49,7 +49,8 @@ export default async function handler(
 
       const existsBookReview = await BookReviewModel.exists({
         bookTitle,
-        userId: session.user?.id
+        userId: session.user?.id,
+        isDeleted: false
       })
   
       if (existsBookReview)

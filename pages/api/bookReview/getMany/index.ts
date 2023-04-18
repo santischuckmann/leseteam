@@ -11,7 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { query : { statuses = Object.values(BookReviewStatus), page, limit, search = '' } } = req
+  const { query : { statuses = Object.values(BookReviewStatus), fromUser = false } } = req
   await sourceConnection()
 
   const session = await getServerSession(req, res, authOptions)
@@ -20,7 +20,7 @@ export default async function handler(
   case RequestMethods.Get: {
     try {
 
-      if (!session) {
+      if (!session && fromUser) {
         throw new Error ('Error de autenticacion')
       }
 
@@ -28,7 +28,7 @@ export default async function handler(
         .find({
           status: { $in: statuses },
           ...DefaultOperationFields,
-          userId: session.user?.id,
+          ...(fromUser ? { userId: session?.user?.id }: {})
         })
         .lean()
   

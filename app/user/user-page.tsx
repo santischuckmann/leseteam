@@ -1,6 +1,7 @@
 'use client'
+import HomeView from '@/views/Home'
 import { BookReview } from '@/constants'
-import { NewHomeView } from '@/views/NewHome'
+import Providers from '@/app/providers'
 
 export interface HomeProps {
   bookReviews: BookReview[];
@@ -9,6 +10,8 @@ export interface HomeProps {
 
 export default function HomePage ({ bookReviews }: HomeProps) {
   return (
-    <NewHomeView bookReviews={bookReviews} />
+    <Providers bookReviews={bookReviews}>
+      <HomeView />
+    </Providers>
   ) 
 }

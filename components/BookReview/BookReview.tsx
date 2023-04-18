@@ -13,9 +13,9 @@ import globalStyles from '@/styles/components/globals.module.scss'
 
 interface BookReviewProps {
   bookReview: BookReview
-  onRemoveBookReview: () => Promise<void>;
-  onConfirmEdition: (newBookReview: BookReview) => Promise<void>;
-  loading: boolean;
+  onRemoveBookReview?: () => Promise<void>;
+  onConfirmEdition?: (newBookReview: BookReview) => Promise<void>;
+  loading?: boolean;
 }
 
 const BookReview: FC<BookReviewProps> = ({
@@ -42,7 +42,8 @@ const BookReview: FC<BookReviewProps> = ({
   }
 
   const _handleConfirmBookReviewEdition = async () => {
-    onConfirmEdition(editableBookReview)
+    if (onConfirmEdition)
+      onConfirmEdition(editableBookReview)
 
     setAnchorEl(null)
   }
@@ -54,7 +55,8 @@ const BookReview: FC<BookReviewProps> = ({
   }
 
   const _handleRemoveBookReview = async () => {
-    onRemoveBookReview()
+    if (onRemoveBookReview)
+      onRemoveBookReview()
   }
 
   return (
@@ -67,14 +69,16 @@ const BookReview: FC<BookReviewProps> = ({
         initial={'hidden'}
         inViewCallback={(control) => control.start('visible')}
         containerClassName={styles.root}>
-        <Box className={styles.content} display='flex' flexDirection='row' justifyContent='space-between' width='100%'>
-          <IconButton onClick={_handleOpen}>
-            <EditButton />
-          </IconButton>
-          <IconButton onClick={_handleRemoveBookReview}>
-            {loading ? <CircularProgress /> : <DeleteIcon /> }
-          </IconButton>
-        </Box>
+        {onConfirmEdition && onRemoveBookReview && (
+          <Box className={styles.content} display='flex' flexDirection='row' justifyContent='space-between' width='100%'>
+            <IconButton onClick={_handleOpen}>
+              <EditButton />
+            </IconButton>
+            <IconButton onClick={_handleRemoveBookReview}>
+              {loading ? <CircularProgress /> : <DeleteIcon /> }
+            </IconButton>
+          </Box>
+        )}
         <h2>{bookTitle}</h2>
         <p>{review}</p>
         <span>{status}</span>
