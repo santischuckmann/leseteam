@@ -1,17 +1,17 @@
 'use client'
-import HomeView from '@/views/Home'
 import { BookReview } from '@/constants'
 import Providers from '@/app/providers'
+import UserView from '@/views/User'
 
-export interface HomeProps {
+export interface UserPageProps {
   bookReviews: BookReview[];
 }
 
 
-export default function HomePage ({ bookReviews }: HomeProps) {
+export default function UserPage ({ bookReviews }: UserPageProps) {
   return (
     <Providers bookReviews={bookReviews}>
-      <HomeView />
+      <UserView />
     </Providers>
   ) 
 }

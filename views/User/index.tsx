@@ -25,7 +25,7 @@ export const textFields = [
   }
 ]
 
-const HomeView = () => {
+const UserView = () => {
   const {
     bookReviews,
     addBookReview
@@ -104,4 +104,4 @@ const HomeView = () => {
   )
 }
 
-export default HomeView
+export default UserView

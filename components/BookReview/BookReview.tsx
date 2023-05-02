@@ -5,11 +5,11 @@ import {
   Delete as DeleteIcon 
 } from '@mui/icons-material'
 import { Box, Button, CircularProgress, Dialog, IconButton, TextField } from '@mui/material'
-import { textFields } from '@/views/Home'
 import { onChangeInput } from '@/lib/utils'
 import { BookReview } from '@/constants'
 import { ScrollAnimatedDiv } from '../ScrollAnimatedDiv'
 import globalStyles from '@/styles/components/globals.module.scss'
+import { textFields } from '@/views/User'
 
 interface BookReviewProps {
   bookReview: BookReview

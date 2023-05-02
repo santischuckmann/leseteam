@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { redirect } from 'next/navigation'
-import HomePage from './user-page'
+import UserPage from './user-page'
 
 async function getBookReviews() {
   try {
@@ -32,5 +32,5 @@ export default async function Page() {
 
   const bookReviews = await getBookReviews()
 
-  return <HomePage bookReviews={bookReviews} />
+  return <UserPage bookReviews={bookReviews} />
 }
