@@ -1,6 +1,6 @@
 import styles from '@/styles/Home.module.scss'
 import React, { MouseEventHandler, useContext, useState } from 'react'
-import { defaultBookReview, RequestMethods } from '@/constants'
+import { defaultBookReview, RequestMethods, textFields } from '@/constants'
 import { Box, Button, Dialog, TextField, Typography } from '@mui/material'
 import { AddElement } from '@/components'
 import globalStyles from '@/styles/components/globals.module.scss'
@@ -8,22 +8,6 @@ import BookReviewsContext, { BookReviewsContextType } from '@/context/BookReview
 import { useOperate } from '@/lib/hooks/useOperate'
 import { BookReviewContainer } from '@/containers/BookReview'
 import { onChangeInput } from '@/lib/utils'
-
-export const textFields = [
-  {
-    name: 'bookTitle',
-    value: (state: typeof defaultBookReview) => state.bookTitle,
-    placeholder: 'Escribe el nombre del libro a reseñar'
-  },
-  {
-    name: 'review',
-    value: (state: typeof defaultBookReview) => state.review,
-    placeholder: 'Escribe la reseña',
-    props: {
-      multiline: true
-    }
-  }
-]
 
 const UserView = () => {
   const {
@@ -69,7 +53,7 @@ const UserView = () => {
       </Box>
       <div className={styles.bookReviewContainer}>
         {!bookReviews.length && (
-          <Typography>Añadí tu primer reseña!</Typography>
+          <Typography>Añadí tu primer reseña pública!</Typography>
         )}
         {bookReviews.map((bookReview, index) => 
           <BookReviewContainer 
@@ -87,7 +71,7 @@ const UserView = () => {
         }}
         onClose={() => setAnchorEl(null)}
         open={Boolean(anchorEl)}>
-        {textFields?.map(({ name, placeholder, value, props = {} }) => (
+        {textFields.map(({ name, placeholder, value, props = {} }) => (
           <TextField
             key={`homeView-${name}`}
             name={name}

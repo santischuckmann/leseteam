@@ -26,12 +26,30 @@ export const RequestMethodsAxios = {
 export const defaultBookReview = {
   bookTitle : '',
   status: BookReviewStatus.Pending,
-  review: ''
+  review: '',
+  isPublic: false
 }
 
 export interface BookReview {
   bookTitle: string;
   status: typeof BookReviewStatus[keyof typeof BookReviewStatus];
   review: string;
+  isPublic: boolean;
   _id?: string;
 }
+
+export const textFields = [
+  {
+    name: 'bookTitle',
+    value: (state: typeof defaultBookReview) => state.bookTitle,
+    placeholder: 'Escribe el nombre del libro a reseñar'
+  },
+  {
+    name: 'review',
+    value: (state: typeof defaultBookReview) => state.review,
+    placeholder: 'Escribe la reseña',
+    props: {
+      multiline: true
+    }
+  }
+]

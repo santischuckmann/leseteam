@@ -74,7 +74,7 @@ export default async function handler(
         throw new Error ('Error de autenticacion')
       }
 
-      const { bookReviewId, bookTitle, status, review } = req.body
+      const { bookReviewId, bookTitle, status, review, isPublic } = req.body
 
       const existsBookReview = await BookReviewModel.exists({
         _id: bookReviewId
@@ -90,7 +90,8 @@ export default async function handler(
           $set: {
             review,
             bookTitle,
-            status
+            status,
+            isPublic
           }
         })
         .lean()

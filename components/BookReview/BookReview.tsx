@@ -2,14 +2,13 @@ import { FC, MouseEventHandler, useState } from 'react'
 import styles from '@/styles/components/BookReview.module.scss'
 import { 
   Edit as EditButton,
-  Delete as DeleteIcon 
+  Delete as DeleteIcon
 } from '@mui/icons-material'
-import { Box, Button, CircularProgress, Dialog, IconButton, TextField } from '@mui/material'
+import { Box, Button, Checkbox, CircularProgress, Dialog, IconButton, TextField, Typography } from '@mui/material'
 import { onChangeInput } from '@/lib/utils'
-import { BookReview } from '@/constants'
+import { BookReview, textFields } from '@/constants'
 import { ScrollAnimatedDiv } from '../ScrollAnimatedDiv'
 import globalStyles from '@/styles/components/globals.module.scss'
-import { textFields } from '@/views/User'
 
 interface BookReviewProps {
   bookReview: BookReview
@@ -22,7 +21,8 @@ const BookReview: FC<BookReviewProps> = ({
   bookReview: {
     bookTitle, 
     status = 'PENDING',
-    review
+    review,
+    isPublic
   },
   onRemoveBookReview,
   onConfirmEdition,
@@ -32,7 +32,8 @@ const BookReview: FC<BookReviewProps> = ({
   const [ editableBookReview, setEditableBookReview ] = useState({
     bookTitle,
     status,
-    review
+    review,
+    isPublic
   })
 
   const _handleChangeNewBookReview = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +82,7 @@ const BookReview: FC<BookReviewProps> = ({
         )}
         <h2>{bookTitle}</h2>
         <p>{review}</p>
-        <span>{status}</span>
+        <span>{isPublic ? 'PUBLICO' : 'PRIVADO'}</span>
       </ScrollAnimatedDiv>
       <Dialog
         classes={{
@@ -98,6 +99,10 @@ const BookReview: FC<BookReviewProps> = ({
             onChange={_handleChangeNewBookReview}
             placeholder={placeholder}/>
         ))}
+        <Box display='flex' alignItems='center'>
+          <Checkbox checked={editableBookReview.isPublic} onChange={(event) => setEditableBookReview(prev => ({ ...prev, isPublic: event.target.checked }))}/>
+          <Typography>Visible para la comunidad</Typography>
+        </Box>
         <Button onClick={_handleConfirmBookReviewEdition}>
           {loading ? <CircularProgress /> : 'Guardar reseña' }
         </Button>

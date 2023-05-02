@@ -28,7 +28,8 @@ export default async function handler(
         .find({
           status: { $in: statuses },
           ...DefaultOperationFields,
-          ...(fromUser ? { userId: session?.user?.id }: {})
+          ...(fromUser ? { 
+            userId: session?.user?.id }: { isPublic: true })
         })
         .lean()
   
